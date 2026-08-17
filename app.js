@@ -33,7 +33,95 @@ function termRows(){return recordList(data.termLoans).map(x=>({...x,noteCount:no
 function upcomingRows(){return recordList(data.upcoming).map(x=>({...x,noteCount:noteCount('upcoming',x.id)})).sort((a,b)=>byDate(a,b,'closeDate')||String(a.address||'').localeCompare(String(b.address||'')))}
 
 async function init(){if(!configValid()){showOnly('configScreen');return}try{firebase.initializeApp(window.BBCOR_FIREBASE_CONFIG);auth=firebase.auth();db=firebase.database();firebase.database().ref('.info/connected').on('value',s=>{$('connectionText').innerHTML=s.val()?'<span class="status-dot"></span>Connected to Firebase':'Offline / reconnecting'});auth.onAuthStateChanged(handleAuth)}catch(e){console.error(e);showOnly('configScreen')}}
-async function handleAuth(u){clearListeners();user=u;if(!u){userProfile=null;showOnly('loginScreen');return}try{const snap=await db.ref('users/'+u.uid).once('value');const p=snap.val();if(!p||p.active===false){await db.ref('accessRequests/'+u.uid).set({email:u.email||'',displayName:u.displayName||'',requestedAt:firebase.database.ServerValue.TIMESTAMP,status:p?.active===false?'disabled':'pending'}).catch(()=>{});showOnly('pendingScreen');return}userProfile={uid:u.uid,...p};await db.ref('accessRequests/'+u.uid).remove().catch(()=>{});showOnly('appShell');startListeners();renderShell();audit('login','Successful cloud login')}catch(e){console.error(e);showOnly('pendingScreen')}}
+async function handleAuth(u){
+  clearListeners();
+  user=u;
+  if(!u){
+    userProfile=null;
+    showOnly('loginScreen');
+    return;
+  }
+
+  const showPendingDetail=(message,isError=false)=>{
+    showOnly('pendingScreen');
+    const old=document.getElementById('pendingDebug');
+    if(old)old.remove();
+    const box=document.createElement('div');
+    box.id='pendingDebug';
+    box.className='notice '+(isError?'error':'info');
+    box.style.marginTop='14px';
+    box.style.whiteSpace='pre-wrap';
+    box.textContent=message;
+    const target=document.querySelector('#pendingScreen .auth-card')||document.getElementById('pendingScreen');
+    target.appendChild(box);
+  };
+
+  try{
+    const path='users/'+u.uid;
+    const snap=await db.ref(path).once('value');
+    const p=snap.val();
+
+    if(!p||p.active===false){
+      await db.ref('accessRequests/'+u.uid).set({
+        email:u.email||'',
+        displayName:u.displayName||'',
+        requestedAt:firebase.database.ServerValue.TIMESTAMP,
+        status:p?.active===false?'disabled':'pending'
+      }).catch(()=>{});
+
+      if(!p){
+        showPendingDetail(
+          'PROFILE NOT FOUND
+
+Authenticated UID:
+'+u.uid+
+          '
+
+Expected database path:
+/'+path+
+          '
+
+Your login succeeded, but Firebase returned no user profile at that exact path.'
+        );
+      }else{
+        showPendingDetail(
+          'ACCOUNT DISABLED
+
+Authenticated UID:
+'+u.uid+
+          '
+
+The user profile exists, but active is set to false.'
+        );
+      }
+      return;
+    }
+
+    userProfile={uid:u.uid,...p};
+    await db.ref('accessRequests/'+u.uid).remove().catch(()=>{});
+    showOnly('appShell');
+    startListeners();
+    renderShell();
+    audit('login','Successful cloud login');
+  }catch(e){
+    console.error('BBCOR user-profile lookup failed',e);
+    showPendingDetail(
+      'DATABASE READ ERROR
+
+Authenticated UID:
+'+u.uid+
+      '
+
+Code:
+'+String(e.code||'(none)')+
+      '
+
+Message:
+'+String(e.message||e),
+      true
+    );
+  }
+}
 function clearListeners(){listeners.forEach(({ref,event,cb})=>ref.off(event,cb));listeners=[]}
 function listen(path,key){const ref=db.ref(path),cb=s=>{data[key]=s.val()||{};if(currentView)renderCurrent()};ref.on('value',cb);listeners.push({ref,event:'value',cb})}
 function startListeners(){['properties','draws','termLoans','upcomingPurchases','notes'].forEach((p,i)=>listen(p,['properties','draws','termLoans','upcoming','notes'][i]));if(isAdmin()){listen('users','users');listen('accessRequests','accessRequests');listen('audit','audit')}}
