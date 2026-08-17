@@ -1,31 +1,19 @@
-BBCOR PROPERTY COMMAND CENTER - FINAL GITHUB DEPLOYMENT PACKAGE
+BBCOR CACHE-PROOF DEPLOYMENT
 
-This package is already configured for the Firebase project:
-  BBCOR COMMAND CENTER
-  Project ID: bbcor-command-cent
-
-Firebase services already prepared:
-- Email/Password Authentication
-- Realtime Database
-- BBCOR role-based Realtime Database security rules
-- Initial Admin user profile
-
-GITHUB PAGES DEPLOYMENT
-Upload the CONTENTS of this folder to the root of a new GitHub repository.
-Recommended repository name: bbcor-command-center
-
-Required files at the repository root:
+Upload/replace these files in the root of the GitHub repository:
 - index.html
-- app.js
-- styles.css
+- app-v3.js
 - firebase-config.js
+- styles.css
 - manifest.webmanifest
 - icon.svg
-- sw.js
 
-Before login testing, add your GitHub Pages hostname to Firebase Authentication > Settings > Authorized domains.
-For the current GitHub account this will normally be:
-  robmorris74.github.io
+IMPORTANT:
+Delete the old sw.js from GitHub if it is still there.
+You do NOT need app.js anymore; index.html now loads app-v3.js.
 
-Do not upload passwords, service-account keys, or private credentials to GitHub.
-The Firebase web configuration in firebase-config.js is a public project identifier and is protected by Authentication + Database Rules.
+Then open:
+https://robmorris74.github.io/bbcor-command-center/?v=3
+
+This build bypasses the old cached app.js completely and will display the exact
+Firebase profile/database error if login still cannot authorize the user.

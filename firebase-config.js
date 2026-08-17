@@ -1,6 +1,3 @@
-// BBCOR Property Command Center - Firebase configuration
-// Configured for the BBCOR COMMAND CENTER Firebase project.
-
 window.BBCOR_FIREBASE_CONFIG = {
   apiKey: "AIzaSyAaZp8J4VvFfOveiSjk89PUGlmgGlJ81aI",
   authDomain: "bbcor-command-cent.firebaseapp.com",

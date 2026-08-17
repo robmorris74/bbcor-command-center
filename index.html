@@ -9,6 +9,15 @@
   <title>BBCOR Property Command Center</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(rs => rs.forEach(r => r.unregister())).catch(()=>{});
+}
+if ('caches' in window) {
+  caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))).catch(()=>{});
+}
+</script>
+
 </head>
 <body>
   <div id="loading" class="loading-screen"><div class="loading-mark">B</div><div><b>BBCOR Property Command Center</b><span>Loading secure workspace…</span></div></div>
@@ -82,6 +91,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script src="firebase-config.js"></script>
-  <script src="app.js"></script>
+  <script src="app-v3.js"></script>
 </body>
 </html>
