@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#07111f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>BBCOR Property Command Center</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="loading" class="loading-screen"><div class="loading-mark">B</div><div><b>BBCOR Property Command Center</b><span>Loading secure workspace…</span></div></div>
+
+  <section id="configScreen" class="auth-bg hidden">
+    <div class="auth-card wide-auth">
+      <div class="auth-brand"><div class="mark">B</div><div><h1>BBCOR Property</h1><span>Command Center</span></div></div>
+      <h2>Firebase setup required</h2>
+      <p>This deployment package is ready, but it needs its own Firebase project before users can sign in. Open <b>firebase-config.js</b> and paste the Firebase web-app configuration, then reload.</p>
+      <div class="notice info">Do not reuse the trivia database for BBCOR. Create a separate Firebase project so property data and permissions stay isolated.</div>
+      <p class="muted">See <b>DEPLOYMENT_GUIDE.txt</b> in the package for the exact setup steps.</p>
+    </div>
+  </section>
+
+  <section id="loginScreen" class="auth-bg hidden">
+    <div class="auth-card">
+      <div class="auth-brand"><div class="mark">B</div><div><h1>BBCOR Property</h1><span>Command Center</span></div></div>
+      <h2>Secure Sign In</h2>
+      <p class="muted">Use your BBCOR account credentials.</p>
+      <form id="loginForm" class="auth-form">
+        <label>Email</label><input id="loginEmail" type="email" autocomplete="username" required placeholder="name@company.com">
+        <label>Password</label><input id="loginPassword" type="password" autocomplete="current-password" required placeholder="Password">
+        <button class="btn" type="submit">Sign In</button>
+      </form>
+      <button id="resetPasswordBtn" class="link-btn">Forgot password?</button>
+      <div id="loginMessage" class="notice hidden"></div>
+    </div>
+  </section>
+
+  <section id="pendingScreen" class="auth-bg hidden">
+    <div class="auth-card">
+      <div class="auth-brand"><div class="mark">B</div><div><h1>BBCOR Property</h1><span>Command Center</span></div></div>
+      <h2>Access pending</h2>
+      <p>Your login works, but this account has not been approved for BBCOR data yet.</p>
+      <div class="notice info">An administrator can approve your access from <b>Administration → Access Requests</b>.</div>
+      <button id="pendingLogout" class="btn secondary">Sign Out</button>
+    </div>
+  </section>
+
+  <div id="appShell" class="shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><div class="mark">B</div><div><h1>BBCOR Property</h1><span>Command Center</span></div></div>
+      <nav class="nav" id="nav">
+        <button data-view="dashboard" class="active"><span class="ico">⌂</span> Dashboard</button>
+        <button data-view="properties"><span class="ico">▦</span> Current Properties</button>
+        <button data-view="draws"><span class="ico">↓</span> Draw Ledger</button>
+        <button data-view="termLoans"><span class="ico">◆</span> Term Loans</button>
+        <button data-view="upcoming"><span class="ico">＋</span> Upcoming Purchases</button>
+        <button data-view="reports"><span class="ico">⇩</span> Reports & Transfer</button>
+        <button data-view="admin" data-admin-only><span class="ico">⚙</span> Administration</button>
+      </nav>
+      <div class="sidebar-footer"><b>Cloud Connected</b><br><span id="connectionText">Firebase Realtime Database</span></div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <button id="menuBtn" class="menu-btn" aria-label="Menu">☰</button>
+        <div class="title"><h2 id="pageTitle">Executive Dashboard</h2><p id="pageSubtitle">Live BBCOR portfolio overview</p></div>
+        <div class="toolbar"><span id="userPill" class="user-pill"></span><button id="logoutBtn" class="btn secondary">Logout</button></div>
+      </div>
+      <div id="flashArea"></div>
+      <div id="view"></div>
+    </main>
+  </div>
+
+  <div id="modal" class="modal-wrap hidden" role="dialog" aria-modal="true"><div class="modal-card"><div class="modal-head"><h3 id="modalTitle"></h3><button id="modalClose" class="icon-btn">×</button></div><div id="modalBody"></div></div></div>
+  <div id="confirmModal" class="modal-wrap hidden" role="dialog" aria-modal="true"><div class="modal-card small-modal"><h3 id="confirmTitle">Confirm</h3><p id="confirmText"></p><div class="actions end"><button id="confirmCancel" class="btn secondary">Cancel</button><button id="confirmOk" class="btn danger">Delete</button></div></div></div>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="firebase-config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

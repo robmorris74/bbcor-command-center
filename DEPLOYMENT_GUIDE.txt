@@ -1,0 +1,161 @@
+BBCOR PROPERTY COMMAND CENTER — CLOUD DEPLOYMENT GUIDE
+======================================================
+
+WHAT THIS PACKAGE DOES
+----------------------
+This is the cloud version of the BBCOR Property Command Center. It is designed for:
+- GitHub Pages hosting of the user interface
+- Firebase Authentication for individual user credentials
+- Firebase Realtime Database for shared BBCOR data
+- Admin / User / Read Only roles
+- Access approval workflow
+- Current Properties, Draw Ledger, Term Loans, Upcoming Purchases
+- Dated note history
+- Live dashboard totals and risk watch
+- Audit log
+- Excel reports
+- Portable Data Transfer import/export
+- iPhone / Home Screen PWA support
+
+IMPORTANT SECURITY CHANGE
+-------------------------
+The old local application had an admin/admin starter account and a hard-coded Flask secret.
+This cloud package DOES NOT contain that account and DOES NOT store user passwords in GitHub.
+Passwords are handled by Firebase Authentication.
+
+STEP 1 — CREATE A SEPARATE FIREBASE PROJECT
+--------------------------------------------
+Do NOT use the Morris Master Trivia Firebase project for BBCOR.
+Create a new Firebase project dedicated to BBCOR, for example:
+    bbcor-property-command-center
+
+In Firebase:
+1. Add a Web App.
+2. Enable Authentication > Sign-in method > Email/Password.
+3. Create a Realtime Database.
+4. Start the database locked down (do not use public test rules for production).
+
+STEP 2 — PASTE FIREBASE CONFIG
+-------------------------------
+Firebase will show a firebaseConfig object for your Web App.
+Open firebase-config.js in this package and replace the placeholder values.
+The required fields are:
+- apiKey
+- authDomain
+- databaseURL
+- projectId
+- storageBucket
+- messagingSenderId
+- appId
+
+Firebase web config identifies the project and is intended to be used in browser code.
+Do not put service-account keys, private keys, passwords, or server secrets in GitHub.
+
+STEP 3 — INSTALL THE DATABASE RULES
+-----------------------------------
+Open Firebase Console > Realtime Database > Rules.
+Replace the rules with the contents of firebase-rules.json and Publish.
+
+These rules provide:
+- Only approved active users can read BBCOR portfolio data.
+- Admin and User roles can add/edit records.
+- Only Admin can delete records.
+- Read Only users can view/export but cannot change records.
+- Only Admin can manage user roles and read the audit log.
+- Unapproved authenticated users can submit their own access request.
+
+STEP 4 — CREATE THE FIRST ADMIN LOGIN
+--------------------------------------
+In Firebase Console > Authentication > Users:
+1. Click Add user.
+2. Enter the first administrator's email and password.
+3. Copy that user's UID.
+
+Then open Realtime Database > Data and create this record:
+
+/users/<PASTE_THE_UID_HERE>
+    email: "admin-email@example.com"
+    name: "BBCOR Admin"
+    role: "Admin"
+    active: true
+    createdAt: "2026-08-16T00:00:00Z"
+
+The exact createdAt value is not security-sensitive; any ISO date is fine.
+
+STEP 5 — CREATE OTHER USER LOGINS
+----------------------------------
+Create each employee account under Firebase Authentication > Users.
+When that employee signs into BBCOR for the first time, the app creates an Access Request.
+The BBCOR administrator then opens Administration > Access Requests and approves the user as:
+- Admin
+- User
+- Read Only
+
+This means each employee has their own credentials and permissions.
+
+STEP 6 — DEPLOY ON GITHUB PAGES
+--------------------------------
+Create a new GitHub repository, for example:
+    bbcor-command-center
+
+Upload these files to the repository root:
+- index.html
+- styles.css
+- app.js
+- firebase-config.js
+- manifest.webmanifest
+- icon.svg
+- sw.js
+
+The firebase-rules.json and DEPLOYMENT_GUIDE.txt files may also be kept in the repository,
+but they are not required by the browser.
+
+In GitHub:
+Settings > Pages > Deploy from a branch > main / root
+
+The site will look like:
+https://YOUR-GITHUB-USERNAME.github.io/bbcor-command-center/
+
+STEP 7 — MOVE EXISTING BBCOR DATA
+----------------------------------
+The uploaded local BBCOR ZIP did not contain the SQLite database itself, so this package cannot
+preload the current records automatically.
+
+To move your existing records:
+1. Open the current desktop BBCOR application.
+2. Go to Data Transfer.
+3. Export the complete BBCOR Data Transfer .xlsx workbook.
+4. Sign into the cloud BBCOR application as Admin or User.
+5. Open Reports & Data Transfer.
+6. Choose the exported .xlsx workbook.
+7. Select Merge (recommended for the first import).
+8. Import.
+
+The importer maps Properties, Draws, Term Loans, Upcoming Purchases, and Note History.
+
+RECOMMENDED FIRST TEST
+----------------------
+Before entering production data:
+1. Sign in as the first Admin.
+2. Add one test property.
+3. Add a draw.
+4. Add a dated note.
+5. Create a second Firebase Auth user.
+6. Sign in as that user and confirm an Access Request appears.
+7. Approve the user as Read Only and verify that person can view but cannot edit.
+8. Export a Data Transfer workbook.
+
+BACKUPS
+-------
+Use Reports & Data Transfer > Export Data Transfer Workbook regularly.
+This produces a portable Excel backup of the BBCOR business records.
+Firebase also supports database export/backup options depending on your Firebase plan.
+
+LIMITATIONS / DESIGN NOTES
+--------------------------
+- GitHub Pages hosts static files only. Firebase provides authentication and the database.
+- Creating/deleting Firebase Authentication accounts is intentionally done in Firebase Console.
+  This avoids putting privileged Admin SDK credentials into the browser.
+- The BBCOR Administration screen manages BBCOR authorization/roles after an Auth account exists.
+- The Excel report formatting is simpler than the old Python/openpyxl reports because report files
+  are generated in the browser. The data remains fully exportable.

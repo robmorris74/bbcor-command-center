@@ -1,0 +1,42 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'Admin')",
+        ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('role').val() === 'Admin'"
+      }
+    },
+    "accessRequests": {
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || root.child('users').child(auth.uid).child('role').val() === 'Admin')",
+        ".write": "auth != null && (auth.uid === $uid || (root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('role').val() === 'Admin'))"
+      }
+    },
+    "properties": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true",
+      "$id": { ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && (root.child('users').child(auth.uid).child('role').val() === 'Admin' || (root.child('users').child(auth.uid).child('role').val() === 'User' && newData.exists()))" }
+    },
+    "draws": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true",
+      "$id": { ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && (root.child('users').child(auth.uid).child('role').val() === 'Admin' || (root.child('users').child(auth.uid).child('role').val() === 'User' && newData.exists()))" }
+    },
+    "termLoans": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true",
+      "$id": { ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && (root.child('users').child(auth.uid).child('role').val() === 'Admin' || (root.child('users').child(auth.uid).child('role').val() === 'User' && newData.exists()))" }
+    },
+    "upcomingPurchases": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true",
+      "$id": { ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && (root.child('users').child(auth.uid).child('role').val() === 'Admin' || (root.child('users').child(auth.uid).child('role').val() === 'User' && newData.exists()))" }
+    },
+    "notes": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true",
+      "$id": { ".write": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && (root.child('users').child(auth.uid).child('role').val() === 'Admin' || (root.child('users').child(auth.uid).child('role').val() === 'User' && newData.exists()))" }
+    },
+    "audit": {
+      ".read": "auth != null && root.child('users').child(auth.uid).child('active').val() === true && root.child('users').child(auth.uid).child('role').val() === 'Admin'",
+      "$id": { ".write": "auth != null && !data.exists() && newData.child('userUid').val() === auth.uid" }
+    }
+  }
+}
