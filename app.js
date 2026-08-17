@@ -32,94 +32,114 @@ function propertyRows(){return recordList(data.properties).map(p=>{const balance
 function termRows(){return recordList(data.termLoans).map(x=>({...x,noteCount:noteCount('term_loan',x.id)})).sort((a,b)=>byDate(a,b,'maturityDate')||String(a.property||'').localeCompare(String(b.property||'')))}
 function upcomingRows(){return recordList(data.upcoming).map(x=>({...x,noteCount:noteCount('upcoming',x.id)})).sort((a,b)=>byDate(a,b,'closeDate')||String(a.address||'').localeCompare(String(b.address||'')))}
 
-async function init(){if(!configValid()){showOnly('configScreen');return}try{firebase.initializeApp(window.BBCOR_FIREBASE_CONFIG);auth=firebase.auth();db=firebase.database();firebase.database().ref('.info/connected').on('value',s=>{$('connectionText').innerHTML=s.val()?'<span class="status-dot"></span>Connected to Firebase':'Offline / reconnecting'});auth.onAuthStateChanged(handleAuth)}catch(e){console.error(e);showOnly('configScreen')}}
+async function init(){
+  if(!configValid()){showOnly('configScreen');return}
+  try{
+    // Remove any old BBCOR service worker/cache that may still be serving stale JavaScript.
+    if('serviceWorker' in navigator){
+      try{
+        const regs=await navigator.serviceWorker.getRegistrations();
+        for(const reg of regs) await reg.unregister();
+      }catch(e){console.warn('Service worker cleanup skipped',e)}
+    }
+    if('caches' in window){
+      try{
+        const keys=await caches.keys();
+        await Promise.all(keys.map(k=>caches.delete(k)));
+      }catch(e){console.warn('Cache cleanup skipped',e)}
+    }
+
+    if(!firebase.apps.length) firebase.initializeApp(window.BBCOR_FIREBASE_CONFIG);
+    auth=firebase.auth();
+    db=firebase.database();
+
+    firebase.database().ref('.info/connected').on('value',s=>{
+      $('connectionText').innerHTML=s.val()
+        ?'<span class="status-dot"></span>Connected to Firebase'
+        :'Offline / reconnecting';
+    });
+
+    auth.onAuthStateChanged(handleAuth);
+  }catch(e){
+    console.error('BBCOR initialization failed',e);
+    showOnly('configScreen');
+  }
+}
 async function handleAuth(u){
   clearListeners();
   user=u;
+
   if(!u){
     userProfile=null;
     showOnly('loginScreen');
     return;
   }
 
-  const showPendingDetail=(message,isError=false)=>{
-    showOnly('pendingScreen');
-    const old=document.getElementById('pendingDebug');
-    if(old)old.remove();
-    const box=document.createElement('div');
-    box.id='pendingDebug';
-    box.className='notice '+(isError?'error':'info');
-    box.style.marginTop='14px';
-    box.style.whiteSpace='pre-wrap';
-    box.textContent=message;
-    const target=document.querySelector('#pendingScreen .auth-card')||document.getElementById('pendingScreen');
-    target.appendChild(box);
-  };
-
   try{
-    const path='users/'+u.uid;
-    const snap=await db.ref(path).once('value');
-    const p=snap.val();
+    // Always force a fresh token before reading the user's authorization record.
+    await u.getIdToken(true).catch(()=>{});
 
-    if(!p||p.active===false){
-      await db.ref('accessRequests/'+u.uid).set({
-        email:u.email||'',
-        displayName:u.displayName||'',
-        requestedAt:firebase.database.ServerValue.TIMESTAMP,
-        status:p?.active===false?'disabled':'pending'
-      }).catch(()=>{});
+    const userPath='users/'+u.uid;
+    let snap=await db.ref(userPath).once('value');
+    let p=snap.val();
 
-      if(!p){
-        showPendingDetail(
-          'PROFILE NOT FOUND
+    // One short retry handles the occasional first-read race immediately after login.
+    if(!p){
+      await new Promise(r=>setTimeout(r,450));
+      snap=await db.ref(userPath).once('value');
+      p=snap.val();
+    }
 
-Authenticated UID:
-'+u.uid+
-          '
+    if(p && p.active!==false){
+      userProfile={uid:u.uid,...p};
 
-Expected database path:
-/'+path+
-          '
+      // Clean up any stale pending request now that the user is authorized.
+      await db.ref('accessRequests/'+u.uid).remove().catch(()=>{});
 
-Your login succeeded, but Firebase returned no user profile at that exact path.'
-        );
-      }else{
-        showPendingDetail(
-          'ACCOUNT DISABLED
-
-Authenticated UID:
-'+u.uid+
-          '
-
-The user profile exists, but active is set to false.'
-        );
-      }
+      showOnly('appShell');
+      startListeners();
+      renderShell();
+      audit('login','Successful cloud login');
       return;
     }
 
-    userProfile={uid:u.uid,...p};
-    await db.ref('accessRequests/'+u.uid).remove().catch(()=>{});
-    showOnly('appShell');
-    startListeners();
-    renderShell();
-    audit('login','Successful cloud login');
+    // Only create a pending request when the profile truly does not exist or is disabled.
+    await db.ref('accessRequests/'+u.uid).set({
+      email:u.email||'',
+      displayName:u.displayName||'',
+      requestedAt:firebase.database.ServerValue.TIMESTAMP,
+      status:p?.active===false?'disabled':'pending'
+    }).catch(()=>{});
+
+    showOnly('pendingScreen');
+
+    // Make the pending screen useful rather than silently hiding the reason.
+    const existing=document.getElementById('pendingDebug');
+    if(existing) existing.remove();
+    const note=document.createElement('div');
+    note.id='pendingDebug';
+    note.className='notice info';
+    note.style.marginTop='14px';
+    note.style.whiteSpace='pre-wrap';
+    note.textContent=p?.active===false
+      ? 'This BBCOR account is currently disabled.'
+      : 'Your Firebase login succeeded, but no active BBCOR user profile was returned for UID: '+u.uid;
+    (document.querySelector('#pendingScreen .auth-card')||$('pendingScreen')).appendChild(note);
+
   }catch(e){
-    console.error('BBCOR user-profile lookup failed',e);
-    showPendingDetail(
-      'DATABASE READ ERROR
+    console.error('BBCOR profile lookup failed',e);
+    showOnly('pendingScreen');
 
-Authenticated UID:
-'+u.uid+
-      '
-
-Code:
-'+String(e.code||'(none)')+
-      '
-
-Message:
-'+String(e.message||e),
-      true
-    );
+    const existing=document.getElementById('pendingDebug');
+    if(existing) existing.remove();
+    const note=document.createElement('div');
+    note.id='pendingDebug';
+    note.className='notice error';
+    note.style.marginTop='14px';
+    note.style.whiteSpace='pre-wrap';
+    note.textContent='Database error: '+String(e.code||'unknown')+'
+'+String(e.message||e);
+    (document.querySelector('#pendingScreen .auth-card')||$('pendingScreen')).appendChild(note);
   }
 }
 function clearListeners(){listeners.forEach(({ref,event,cb})=>ref.off(event,cb));listeners=[]}
@@ -271,6 +291,5 @@ function wireAdmin(tab){
   }
 }
 
-if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 init();
 })();
