@@ -60,7 +60,8 @@ if ('caches' in window) {
   <div id="appShell" class="shell hidden">
     <aside class="sidebar" id="sidebar">
       <div class="brand"><div class="mark">B</div><div><h1>BBCOR</h1><span>Command Center</span></div></div>
-<nav class="nav" id="nav"><button data-view="hub" class="active"><span class="ico">⌂</span> BBCOR Home</button><a href="properties.html"><span class="ico">▦</span> Property Center</a><a href="buyers.html"><span class="ico">◎</span> Buyer Center</a><a href="expenses.html"><span class="ico">＄</span> Expense Center</a><button data-view="admin" data-admin-only><span class="ico">⚙</span> Administration</button></nav>
+<nav class="nav" id="nav"><button data-view="hub" class="active"><span class="ico">⌂</span> BBCOR Home</button><a href="properties.html"><span class="ico">▦</span> Property Center</a><a href="buyers.html"><span class="ico">◎</span> Buyer Center</a><a href="rentals.html">Rental Center</a>
+        <a href="expenses.html"><span class="ico">＄</span> Expense Center</a><button data-view="admin" data-admin-only><span class="ico">⚙</span> Administration</button></nav>
       <div class="sidebar-footer"><b>Cloud Connected</b><br><span id="connectionText">Firebase Realtime Database</span></div>
     </aside>
 
@@ -85,6 +86,8 @@ if ('caches' in window) {
   <script src="firebase-config.js"></script>
   <script src="buyers.js"></script>
   <script src="expenses.js"></script>
+  <script src="rental-core.js"></script>
+  <script src="rentals.js"></script>
   <script src="app-v4.js"></script>
 </body>
 </html>
