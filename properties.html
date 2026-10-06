@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#07111f">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>BBCOR Command Center</title>
+  <title>BBCOR Property Center</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="styles.css">
 <script>
@@ -19,7 +19,7 @@ if ('caches' in window) {
 </script>
 
 </head>
-<body data-center="hub" data-default-view="hub">
+<body data-center="properties" data-default-view="dashboard">
   <div id="loading" class="loading-screen"><div class="loading-mark">B</div><div><b>BBCOR Command Center</b><span>Loading secure workspace…</span></div></div>
 
   <section id="configScreen" class="auth-bg hidden">
@@ -60,7 +60,17 @@ if ('caches' in window) {
   <div id="appShell" class="shell hidden">
     <aside class="sidebar" id="sidebar">
       <div class="brand"><div class="mark">B</div><div><h1>BBCOR</h1><span>Command Center</span></div></div>
-<nav class="nav" id="nav"><button data-view="hub" class="active"><span class="ico">⌂</span> BBCOR Home</button><a href="properties.html"><span class="ico">▦</span> Property Center</a><a href="buyers.html"><span class="ico">◎</span> Buyer Center</a><a href="expenses.html"><span class="ico">＄</span> Expense Center</a><button data-view="admin" data-admin-only><span class="ico">⚙</span> Administration</button></nav>
+
+      <nav class="nav" id="nav"><a href="index.html"><span class="ico">⌂</span> BBCOR Home</a>
+        <button data-view="dashboard" class="active"><span class="ico">⌂</span> Dashboard</button>
+        <button data-view="properties"><span class="ico">▦</span> Current Properties</button>
+        <button data-view="draws"><span class="ico">↓</span> Draw Ledger</button>
+        <button data-view="termLoans"><span class="ico">◆</span> Term Loans</button>
+        <button data-view="upcoming"><span class="ico">＋</span> Upcoming Purchases</button>
+
+        <button data-view="reports"><span class="ico">⇩</span> Reports & Transfer</button>
+        <button data-view="admin" data-admin-only><span class="ico">⚙</span> Administration</button>
+      </nav>
       <div class="sidebar-footer"><b>Cloud Connected</b><br><span id="connectionText">Firebase Realtime Database</span></div>
     </aside>
 
