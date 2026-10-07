@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-07T00:23:34+00:00",
+  "outboundContactLocked": true,
+  "prospects": [
+    {
+      "company": "Rural ReDevelopment Group / Rural Asset Management",
+      "buyerType": "Direct developer",
+      "whyFits": "Kansas developer converts former schools, hospitals and nursing homes into housing.",
+      "caveat": "Property fit, purchase capacity and timing require confirmation.",
+      "sourceUrl": "https://www.ruralassetmanagement.com/about",
+      "contactRoute": "Review official acquisition source and published contact page before any approach.",
+      "sourceKey": "ruralassetmanagement.com",
+      "canonicalDomain": "ruralassetmanagement.com",
+      "aliases": [
+        "Rural ReDevelopment Group",
+        "Rural Asset Management"
+      ],
+      "emailVerification": "No direct contact verification in public feed",
+      "sourceVersion": "ec01b39c47583219f98e6883f1751d19f16a36443e3b65e7699bf33f897b3310",
+      "compiled": "2026-10-07",
+      "sourceVerification": {
+        "status": "verified",
+        "method": "official page review at initial recovery",
+        "lastVerifiedAt": "2026-10-07T00:23:34+00:00",
+        "lastCheckedAt": "2026-10-07T00:23:34+00:00",
+        "evidence": "specializes in the adaptive reuse of rural properties",
+        "failures": 0
+      }
+    },
+    {
+      "company": "Phoenix Investors",
+      "buyerType": "Direct buyer / developer",
+      "whyFits": "Industrial property buyer with a national repositioning strategy.",
+      "caveat": "Local market, asset condition and minimum deal size require confirmation.",
+      "sourceUrl": "https://phoenixinvestors.com/portfolio/",
+      "contactRoute": "Review official acquisition source and published contact page before any approach.",
+      "sourceKey": "phoenixinvestors.com",
+      "canonicalDomain": "phoenixinvestors.com",
+      "aliases": [],
+      "emailVerification": "No direct contact verification in public feed",
+      "sourceVersion": "5cd3936b69f619b51205a1f22fdab312b40ce2dd397bc44fee4b604b8749308a",
+      "compiled": "2026-10-07",
+      "sourceVerification": {
+        "status": "verified",
+        "method": "official page review at initial recovery",
+        "lastVerifiedAt": "2026-10-07T00:23:34+00:00",
+        "lastCheckedAt": "2026-10-07T00:23:34+00:00",
+        "evidence": "acquisition, development, renovation, and repositioning of industrial",
+        "failures": 0
+      }
+    },
+    {
+      "company": "Industrial Realty Group, LLC (IRG)",
+      "buyerType": "Direct buyer / developer",
+      "whyFits": "National owner of commercial and industrial property.",
+      "caveat": "Confirm local interest, suitable property use, size and transaction structure.",
+      "sourceUrl": "https://www.industrialrealtygroup.com/process/acquisitions/",
+      "contactRoute": "Review official acquisition source and published contact page before any approach.",
+      "sourceKey": "industrialrealtygroup.com",
+      "canonicalDomain": "industrialrealtygroup.com",
+      "aliases": [
+        "Industrial Realty Group",
+        "IRG"
+      ],
+      "emailVerification": "No direct contact verification in public feed",
+      "sourceVersion": "51c3a12f0a8e726066edf56b78390d7ae88b816f8392e313fa21aecd3000d814",
+      "compiled": "2026-10-07",
+      "sourceVerification": {
+        "status": "verified",
+        "method": "official page review at initial recovery",
+        "lastVerifiedAt": "2026-10-07T00:23:34+00:00",
+        "lastCheckedAt": "2026-10-07T00:23:34+00:00",
+        "evidence": "IRG, a nationwide company",
+        "failures": 0
+      }
+    },
+    {
+      "company": "AIC Industrial / AIC Ventures, Inc.",
+      "buyerType": "Direct acquisition firm",
+      "whyFits": "U.S. industrial investor with sale leaseback and net lease acquisition experience.",
+      "caveat": "Tenant and lease requirements may exclude vacant properties.",
+      "sourceUrl": "https://aicindustrial.com/acquisitions/",
+      "contactRoute": "Review official acquisition source and published contact page before any approach.",
+      "sourceKey": "aicindustrial.com",
+      "canonicalDomain": "aicindustrial.com",
+      "aliases": [
+        "AIC Industrial",
+        "AIC Ventures"
+      ],
+      "emailVerification": "No direct contact verification in public feed",
+      "sourceVersion": "7a175b9b346b1e850b4aba377a7fcef01fd40cbb38e8bcb9bf40892e0185272b",
+      "compiled": "2026-10-07",
+      "sourceVerification": {
+        "status": "verified",
+        "method": "official page review at initial recovery",
+        "lastVerifiedAt": "2026-10-07T00:23:34+00:00",
+        "lastCheckedAt": "2026-10-07T00:23:34+00:00",
+        "evidence": "sale leaseback transactions and existing net lease investments",
+        "failures": 0
+      }
+    },
+    {
+      "company": "New Mill Capital",
+      "buyerType": "Direct acquisition firm",
+      "whyFits": "National firm buys manufacturing assets and real estate; has a Kansas City office.",
+      "caveat": "Confirm real estate interest independently of equipment liquidation.",
+      "sourceUrl": "https://www.newmillcapital.com/",
+      "contactRoute": "Review official acquisition source and published contact page before any approach.",
+      "sourceKey": "newmillcapital.com",
+      "canonicalDomain": "newmillcapital.com",
+      "aliases": [],
+      "emailVerification": "No direct contact verification in public feed",
+      "sourceVersion": "47a08241e7c366644435a4d3a21ba8e2b98b1eda50ddc6987f299e2864a59e7d",
+      "compiled": "2026-10-07",
+      "sourceVerification": {
+        "status": "verified",
+        "method": "official page review at initial recovery",
+        "lastVerifiedAt": "2026-10-07T00:23:34+00:00",
+        "lastCheckedAt": "2026-10-07T00:23:34+00:00",
+        "evidence": "buying and selling excess manufacturing equipment and real estate",
+        "failures": 0
+      }
+    },
+    {
+      "company": "Brennan Investment Group",
+      "buyerType": "Direct acquisition firm",
+      "whyFits": "Industrial investment group acquires and develops multi-tenant assets.",
+      "caveat": "Confirm small market criteria, size, tenancy and property fit.",
+      "sourceUrl": "https://www.brennanllc.com/capabilities/acquisitions/",
+      "contactRoute": "Review official acquisition source and published contact page before any approach.",
+      "sourceKey": "brennanllc.com",
+      "canonicalDomain": "brennanllc.com",
+      "aliases": [],
+      "emailVerification": "No direct contact verification in public feed",
+      "sourceVersion": "90950b95abde311df6035bfec43a36de2f08b01283ec8969ba796d882abb62da",
+      "compiled": "2026-10-07",
+      "sourceVerification": {
+        "status": "verified",
+        "method": "official page review at initial recovery",
+        "lastVerifiedAt": "2026-10-07T00:23:34+00:00",
+        "lastCheckedAt": "2026-10-07T00:23:34+00:00",
+        "evidence": "experience acquiring, developing, and leasing multi-tenant assets",
+        "failures": 0
+      }
+    }
+  ],
+  "sourceErrors": []
+}
