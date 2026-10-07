@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-07T20:49:56+00:00",
+  "updatedAt": "2026-10-07T23:06:58+00:00",
   "outboundContactLocked": true,
   "prospects": [
     {
@@ -22,8 +22,8 @@
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-07T20:49:47+00:00",
-        "lastCheckedAt": "2026-10-07T20:49:47+00:00",
+        "lastVerifiedAt": "2026-10-07T23:06:52+00:00",
+        "lastCheckedAt": "2026-10-07T23:06:52+00:00",
         "evidence": "specializes in the adaptive reuse of rural properties",
         "failures": 0
       }
@@ -44,8 +44,8 @@
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-07T20:49:51+00:00",
-        "lastCheckedAt": "2026-10-07T20:49:51+00:00",
+        "lastVerifiedAt": "2026-10-07T23:06:52+00:00",
+        "lastCheckedAt": "2026-10-07T23:06:52+00:00",
         "evidence": "acquisition, development, renovation, and repositioning of industrial",
         "failures": 0
       }
@@ -69,8 +69,8 @@
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-07T20:49:52+00:00",
-        "lastCheckedAt": "2026-10-07T20:49:52+00:00",
+        "lastVerifiedAt": "2026-10-07T23:06:53+00:00",
+        "lastCheckedAt": "2026-10-07T23:06:53+00:00",
         "evidence": "IRG, a nationwide company",
         "failures": 0
       }
@@ -94,8 +94,8 @@
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-07T20:49:53+00:00",
-        "lastCheckedAt": "2026-10-07T20:49:53+00:00",
+        "lastVerifiedAt": "2026-10-07T23:06:54+00:00",
+        "lastCheckedAt": "2026-10-07T23:06:54+00:00",
         "evidence": "sale leaseback transactions and existing net lease investments",
         "failures": 0
       }
@@ -117,9 +117,9 @@
         "status": "stale \u2014 review source",
         "method": "official page review at initial recovery",
         "lastVerifiedAt": "2026-10-07T00:23:34+00:00",
-        "lastCheckedAt": "2026-10-07T20:49:55+00:00",
+        "lastCheckedAt": "2026-10-07T23:06:58+00:00",
         "evidence": "buying and selling excess manufacturing equipment and real estate",
-        "failures": 5
+        "failures": 6
       }
     },
     {
@@ -138,8 +138,8 @@
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-07T20:49:56+00:00",
-        "lastCheckedAt": "2026-10-07T20:49:56+00:00",
+        "lastVerifiedAt": "2026-10-07T23:06:58+00:00",
+        "lastCheckedAt": "2026-10-07T23:06:58+00:00",
         "evidence": "experience acquiring, developing, and leasing multi-tenant assets",
         "failures": 0
       }
