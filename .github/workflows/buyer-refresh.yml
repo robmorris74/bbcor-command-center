@@ -1,0 +1,43 @@
+name: Refresh buyer research
+on:
+  schedule:
+    - cron: '17 */2 * * *'
+  workflow_dispatch:
+  push:
+    paths: ['prospect-pipeline/**', 'buyer-core.js', 'tests/**', '.github/workflows/buyer-refresh.yml']
+permissions:
+  contents: write
+concurrency:
+  group: buyer-source-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify review and source protections
+        run: |
+          python -m unittest discover -s tests -p 'test_*.py'
+          node --test tests/buyer-core.test.cjs
+      - name: Refresh public evidence and optional discovery
+        env:
+          BRAVE_SEARCH_API_KEY: ${{ secrets.BRAVE_SEARCH_API_KEY }}
+        run: python prospect-pipeline/refresh.py
+      - name: Publish public research feed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/buyer-prospects.json data/buyer-discovery.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Refresh public buyer acquisition evidence'
+          git push origin HEAD:main
