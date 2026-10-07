@@ -15,7 +15,8 @@ This is the cloud version of the BBCOR Property Command Center. It is designed f
 - Audit log
 - Excel reports
 - Portable Data Transfer import/export
-- iPhone / Home Screen PWA support
+- Buyer research and rental workspaces
+- iPhone / Home Screen presentation (online connection required)
 
 IMPORTANT SECURITY CHANGE
 -------------------------
@@ -23,8 +24,11 @@ The old local application had an admin/admin starter account and a hard-coded Fl
 This cloud package DOES NOT contain that account and DOES NOT store user passwords in GitHub.
 Passwords are handled by Firebase Authentication.
 
-STEP 1 — CREATE A SEPARATE FIREBASE PROJECT
---------------------------------------------
+STEP 1 — FIREBASE PROJECT (FIRST-TIME SETUP ONLY)
+------------------------------------------------
+For updates to this deployed repository, preserve firebase-config.js and the
+existing Firebase project, accounts, data and rules. Skip setup steps 1–5.
+
 Do NOT use the Morris Master Trivia Firebase project for BBCOR.
 Create a new Firebase project dedicated to BBCOR, for example:
     bbcor-property-command-center
@@ -95,17 +99,33 @@ This means each employee has their own credentials and permissions.
 
 STEP 6 — DEPLOY ON GITHUB PAGES
 --------------------------------
-Create a new GitHub repository, for example:
-    bbcor-command-center
-
-Upload these files to the repository root:
-- index.html
+The existing site deploys from robmorris74/bbcor-command-center, main / root.
+For updates, commit changes to that repository; do not create a replacement.
+For a fresh copy, keep these browser files together in the repository root:
+- index.html (hub)
+- properties.html
+- expenses.html
+- buyers.html
+- rentals.html
+- app-v4.js (shared active entrypoint for all five pages)
 - styles.css
-- app.js
 - firebase-config.js
+- buyers.js and buyer-core.js
+- expenses.js
+- rentals.js and rental-core.js
 - manifest.webmanifest
 - icon.svg
-- sw.js
+- data/buyer-prospects.json and data/buyer-discovery.json
+
+Do not deploy sw.js, app.js, or app-v3.js. They have been retired.
+Keep the prospect-pipeline directory and buyer-refresh workflow for research
+updates; see BUYER_PIPELINE.md. Preserve the strict outbound-contact hold.
+Neither deployment nor automated research authorizes or sends outreach.
+
+Before publishing, run:
+    node --test tests/*.test.cjs
+    python -m unittest discover -s tests -p 'test_*.py'
+The deployment-contract workflow also runs on pushes and pull requests.
 
 The firebase-rules.json and DEPLOYMENT_GUIDE.txt files may also be kept in the repository,
 but they are not required by the browser.
@@ -113,8 +133,27 @@ but they are not required by the browser.
 In GitHub:
 Settings > Pages > Deploy from a branch > main / root
 
-The site will look like:
-https://YOUR-GITHUB-USERNAME.github.io/bbcor-command-center/
+The current live site is:
+https://robmorris74.github.io/bbcor-command-center/
+
+After updating main, wait for the Pages build and deployment to succeed.
+Open the hub, properties, expenses, buyers and rentals pages; confirm app-v4.js
+loads and an existing approved user can sign in. Confirm buyer review controls
+and the outreach hold remain visible. No Firebase data migration is needed for
+this cache cleanup.
+
+CACHE BEHAVIOR AND RETURNING BROWSERS
+------------------------------------
+All entrypoints retain service-worker unregistration and Cache Storage cleanup.
+There is no active service worker or offline app-shell caching. Keep that cleanup
+for returning browsers. The manifest/icon and Home Screen presentation remain.
+Normal browser and GitHub Pages HTTP caching still applies.
+
+A deleted worker can remain installed in an existing browser until cleanup runs.
+If a cached older page persists, close all BBCOR tabs/Home Screen windows, clear
+this site's browser data, reopen the URL and sign in again. A query-string version
+alone does not guarantee recovery. Clearing browser data does not delete shared
+Firebase records, but it can end the local sign-in session.
 
 STEP 7 — MOVE EXISTING BBCOR DATA
 ----------------------------------

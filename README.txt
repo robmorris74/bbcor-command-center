@@ -1,19 +1,37 @@
-BBCOR CACHE-PROOF DEPLOYMENT
+BBCOR COMMAND CENTER — CURRENT DEPLOYMENT
 
-Upload/replace these files in the root of the GitHub repository:
-- index.html
-- app-v3.js
-- firebase-config.js
-- styles.css
-- manifest.webmanifest
-- icon.svg
+Live site:
+https://robmorris74.github.io/bbcor-command-center/
 
-IMPORTANT:
-Delete the old sw.js from GitHub if it is still there.
-You do NOT need app.js anymore; index.html now loads app-v3.js.
+GitHub Pages publishes main / root. All five entrypoints (index.html,
+properties.html, expenses.html, buyers.html, rentals.html) load app-v4.js.
+Keep their supporting files together:
+- app-v4.js, styles.css, firebase-config.js
+- buyers.js, buyer-core.js, expenses.js, rentals.js, rental-core.js
+- manifest.webmanifest, icon.svg
+- data/buyer-prospects.json, data/buyer-discovery.json
 
-Then open:
-https://robmorris74.github.io/bbcor-command-center/?v=3
+CACHE RETIREMENT
+There is no active service worker or offline app-shell cache. Do not restore
+sw.js, app.js, or app-v3.js. The entrypoints retain worker unregistration and
+Cache Storage cleanup to migrate returning browsers. The manifest and iPhone
+Home Screen presentation remain; an internet connection is required.
 
-This build bypasses the old cached app.js completely and will display the exact
-Firebase profile/database error if login still cannot authorize the user.
+Deleting the worker does not itself remove a worker already installed in a
+browser. If an old cached page persists, close all BBCOR tabs/Home Screen app
+windows, clear this site's browser data, then reopen the live URL and sign in.
+A version query string alone does not guarantee a fresh page. Normal browser
+and GitHub Pages HTTP caching still applies; this is not a cache-proof build.
+
+UPDATES AND CHECKS
+Keep the existing Firebase configuration and rules. Do not create a replacement
+Firebase project for an update. Run these checks before publishing:
+  node --test tests/*.test.cjs
+  python -m unittest discover -s tests -p 'test_*.py'
+
+The deployment-contract workflow checks pushes and pull requests. After a main
+update, wait for the GitHub Pages build and deployment to succeed; confirm each
+workspace loads app-v4.js and authentication works with an existing account.
+Buyer research remains subject to review and the strict outbound-contact hold.
+See DEPLOYMENT_GUIDE.txt for setup, migration and deployment details, and
+BUYER_PIPELINE.md for the source refresh workflow.
