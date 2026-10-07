@@ -39,9 +39,13 @@ If GitHub Actions is disabled, enable it for this repository. If organization po
 
 ```
 python3 -m unittest discover -s tests -p 'test_*.py'
-node --test tests/buyer-core.test.cjs
+node --test tests/*.test.cjs
 node --check buyers.js
 python3 prospect-pipeline/refresh.py
 ```
 
 The first two commands use isolated fixtures. The final command performs live network checks and retains stale evidence on failure. Public source pages were independently reviewed during recovery; container HTTP fetching was blocked, so successful live fetches need confirmation in GitHub Actions. Unit checks cover identity reuse, explicit source review logic, preservation of concurrent notes/stages and source failure handling. The live sign-in page was inspected; authenticated UI testing requires an approved BBCOR session.
+
+## First live refresh verified
+
+GitHub run `37552648947` completed successfully on October 7, 2026 UTC (October 6 in America/Chicago). It fetched and verified five registered sources, retained New Mill Capital as stale because the expected acquisition phrase was not present in the fetched page, and successfully published the updated feed with the built-in workflow token. Brave discovery was not configured. Eight Node core/render checks and seven Python checks passed locally; source refresh protections also passed in the GitHub runner.

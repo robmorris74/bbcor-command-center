@@ -28,7 +28,7 @@ jobs:
       - name: Verify review and source protections
         run: |
           python -m unittest discover -s tests -p 'test_*.py'
-          node --test tests/buyer-core.test.cjs
+          node --test tests/*.test.cjs
       - name: Refresh public evidence and optional discovery
         env:
           BRAVE_SEARCH_API_KEY: ${{ secrets.BRAVE_SEARCH_API_KEY }}
