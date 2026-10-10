@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-09T22:40:38+00:00",
+  "updatedAt": "2026-10-10T05:55:30+00:00",
   "outboundContactLocked": true,
   "prospects": [
     {
@@ -17,13 +17,13 @@
         "Rural Asset Management"
       ],
       "emailVerification": "No direct contact verification in public feed",
-      "compiled": "2026-10-09",
+      "compiled": "2026-10-10",
       "sourceVersion": "ec01b39c47583219f98e6883f1751d19f16a36443e3b65e7699bf33f897b3310",
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-09T22:40:33+00:00",
-        "lastCheckedAt": "2026-10-09T22:40:33+00:00",
+        "lastVerifiedAt": "2026-10-10T05:55:20+00:00",
+        "lastCheckedAt": "2026-10-10T05:55:20+00:00",
         "evidence": "specializes in the adaptive reuse of rural properties",
         "failures": 0
       }
@@ -39,13 +39,13 @@
       "canonicalDomain": "phoenixinvestors.com",
       "aliases": [],
       "emailVerification": "No direct contact verification in public feed",
-      "compiled": "2026-10-09",
+      "compiled": "2026-10-10",
       "sourceVersion": "5cd3936b69f619b51205a1f22fdab312b40ce2dd397bc44fee4b604b8749308a",
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-09T22:40:34+00:00",
-        "lastCheckedAt": "2026-10-09T22:40:34+00:00",
+        "lastVerifiedAt": "2026-10-10T05:55:24+00:00",
+        "lastCheckedAt": "2026-10-10T05:55:24+00:00",
         "evidence": "acquisition, development, renovation, and repositioning of industrial",
         "failures": 0
       }
@@ -64,13 +64,13 @@
         "IRG"
       ],
       "emailVerification": "No direct contact verification in public feed",
-      "compiled": "2026-10-09",
+      "compiled": "2026-10-10",
       "sourceVersion": "51c3a12f0a8e726066edf56b78390d7ae88b816f8392e313fa21aecd3000d814",
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-09T22:40:35+00:00",
-        "lastCheckedAt": "2026-10-09T22:40:35+00:00",
+        "lastVerifiedAt": "2026-10-10T05:55:26+00:00",
+        "lastCheckedAt": "2026-10-10T05:55:26+00:00",
         "evidence": "IRG, a nationwide company",
         "failures": 0
       }
@@ -89,13 +89,13 @@
         "AIC Ventures"
       ],
       "emailVerification": "No direct contact verification in public feed",
-      "compiled": "2026-10-09",
+      "compiled": "2026-10-10",
       "sourceVersion": "7a175b9b346b1e850b4aba377a7fcef01fd40cbb38e8bcb9bf40892e0185272b",
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-09T22:40:35+00:00",
-        "lastCheckedAt": "2026-10-09T22:40:35+00:00",
+        "lastVerifiedAt": "2026-10-10T05:55:26+00:00",
+        "lastCheckedAt": "2026-10-10T05:55:26+00:00",
         "evidence": "sale leaseback transactions and existing net lease investments",
         "failures": 0
       }
@@ -117,9 +117,9 @@
         "status": "stale \u2014 review source",
         "method": "official page review at initial recovery",
         "lastVerifiedAt": "2026-10-07T00:23:34+00:00",
-        "lastCheckedAt": "2026-10-09T22:40:38+00:00",
+        "lastCheckedAt": "2026-10-10T05:55:29+00:00",
         "evidence": "buying and selling excess manufacturing equipment and real estate",
-        "failures": 13
+        "failures": 14
       }
     },
     {
@@ -133,13 +133,13 @@
       "canonicalDomain": "brennanllc.com",
       "aliases": [],
       "emailVerification": "No direct contact verification in public feed",
-      "compiled": "2026-10-09",
+      "compiled": "2026-10-10",
       "sourceVersion": "90950b95abde311df6035bfec43a36de2f08b01283ec8969ba796d882abb62da",
       "sourceVerification": {
         "status": "verified",
         "method": "official acquisition evidence check",
-        "lastVerifiedAt": "2026-10-09T22:40:38+00:00",
-        "lastCheckedAt": "2026-10-09T22:40:38+00:00",
+        "lastVerifiedAt": "2026-10-10T05:55:30+00:00",
+        "lastCheckedAt": "2026-10-10T05:55:30+00:00",
         "evidence": "experience acquiring, developing, and leasing multi-tenant assets",
         "failures": 0
       }
@@ -148,7 +148,7 @@
   "sourceErrors": [
     {
       "sourceKey": "newmillcapital.com",
-      "reason": "IncompleteRead(0 bytes read)"
+      "reason": "Acquisition evidence changed; human review required"
     }
   ]
 }
